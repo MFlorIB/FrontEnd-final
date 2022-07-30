@@ -1,0 +1,19 @@
+.row {
+    background-color: black;
+}
+
+footer{
+    background-color: var(--bs-body-color);
+    font-size: 16px;
+    height: 65px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;   
+}
+
+
+.footer_p{
+    color:antiquewhite;
+
+}

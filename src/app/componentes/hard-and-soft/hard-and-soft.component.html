@@ -1,0 +1,128 @@
+<div class="card mat-card">
+  <div class="card-titles">
+      <h2>Hard and Soft Skills</h2>
+      <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-plus" data-bs-toggle="modal" data-bs-target="#newApt"></i></a></div>
+    </div>
+    <div class="achivements">
+      <div>
+        <div>
+          <ul class="hardandsoft-list">
+            <li *ngFor="let hys of hard_and_soft" id="listHardandsoft">
+              <div class="data-container">
+                  <div class="list-info">
+                    <div>
+                      <h5> {{hys.tipo}} </h5>
+                      <button type="button" [class]="hys.porcentaje > 0 ? 'btnrating btn btn-warning btn-sm' : 'btnrating btn btn-default btn-sm'" data-attr="1" id="rating-star-1">
+                        <i class="fa fa-star" style="background-color: inherit;" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" [class]="hys.porcentaje > 20 ? 'btnrating btn btn-warning btn-sm' : 'btnrating btn btn-default btn-sm'" data-attr="2" id="rating-star-2">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" [class]="hys.porcentaje > 40 ? 'btnrating btn btn-warning btn-sm' : 'btnrating btn btn-default btn-sm'" data-attr="3" id="rating-star-3">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" [class]="hys.porcentaje > 60 ? 'btnrating btn btn-warning btn-sm' : 'btnrating btn btn-default btn-sm'" data-attr="4" id="rating-star-4">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" [class]="hys.porcentaje > 80 ? 'btnrating btn btn-warning btn-sm': 'btnrating btn btn-default btn-sm'" data-attr="5" id="rating-star-5">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+              </div>
+              <div class="data-control">
+                <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#modificarApt" (click)="obtenerHysModificacion([hys.id])"></i></a></div>
+                <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-trash" data-bs-toggle="modal" data-bs-target="#deleteApt" (click)="obtenerHysEliminar([hys.id])"></i></a></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="newApt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nueva Habilidad</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputTipoHabilidad">Tipo de Habilidad(*)</label>
+              <input type="text" class="form-control" id="inputTipoHabilidad" name="tipo_de_habilidad" ngDefaultControl placeholder="Ingresa Tipo de Habilidad" [(ngModel)]="h.tipo">
+          </div>
+          <div class="form-group">
+            <label for="inputPorcentaje">Porcentaje(*)</label>
+            <input type="text" class="form-control" id="inputPorcentaje" name="porcentaje" ngDefaultControl placeholder="Ingresa Porcentaje de Aprendizaje" [(ngModel)]="h.porcentaje">
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalAlta()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="crearHys()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modificarApt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar Habilidad</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputTipoHabilidadMod">Tipo de Habilidad(*)</label>
+              <input type="text" class="form-control" id="inputTipoHabilidadMod" name="tipo_de_habilidad_mod" ngDefaultControl placeholder="Ingresa Tipo de Habilidad" [(ngModel)]="h1.tipo">
+          </div>
+          <div class="form-group">
+            <label for="inputPorcentajeMod">Porcentaje(*)</label>
+            <input type="text" class="form-control" id="inputPorcentajeMod" name="porcentaje_mod" ngDefaultControl placeholder="Ingresa Porcentaje de Aprendizaje" [(ngModel)]="h1.porcentaje">
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalModificacion()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarHys([h1.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteApt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar Habilidad</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p name = "id_proyecto_delete" ngDefaultControl [(ngModel)]="h2.id">¿Esta seguro que desea eliminar la habilidad {{h2.tipo}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarHys([h2.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

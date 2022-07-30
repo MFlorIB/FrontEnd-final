@@ -1,0 +1,167 @@
+<div class="card mat-card">
+  <div class="card-titles">
+      <h2>Experiencias Laborales</h2>
+      <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-plus" data-bs-toggle="modal" data-bs-target="#newExp" (click)="cargarTipoEmpleo()"></i></a></div>
+    </div>
+    <div class="achivements">
+      <div>
+        <div>
+          <ul class="experi-list">
+            <li *ngFor="let trabajo of trabajos" id="listTrabajos">
+              <div class="data-container">
+                  <div class="list-info">
+                    <div>
+                      <h5>{{trabajo.descripcion}}</h5>
+                      <p><span>Empresa: {{trabajo.nombre_empresa}}</span></p>
+                      <p *ngIf="trabajo.es_trabajo_actual == true"><span>{{trabajo.fechaInicio | date: 'MMMM YYYY'}} - Actualmente</span></p>
+                      <p *ngIf="trabajo.es_trabajo_actual == false"><span>{{trabajo.fechaInicio | date: 'MMMM YYYY'}} - {{trabajo.fecha_fin | date: 'MMMM YYYY'}}</span></p>
+                    </div>
+                  </div>
+              </div>
+              <div class="data-control">
+                <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#editExp" (click)="obtenerEmpleoModificar(trabajo.id)"></i></a></div>
+                <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-trash" data-bs-toggle="modal" data-bs-target="#deleteExp" (click)="obtenerEmpleoEliminar(trabajo.id)"></i></a></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+      
+
+<div class="modal fade" id="newExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nueva Experiencia Laboral</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputEmpresa">Empresa(*)</label>
+              <input type="text" class="form-control" id="inputEmpresa" name="empresa_exp" ngDefaultControl placeholder="Ingrese el nombre de la Empresa" [(ngModel)]="t.nombre_empresa">
+          </div>
+          <div class="form-group">
+              <label for="inputDescripcion">Descripción del puesto</label>
+              <input type="text" class="form-control" id="inputDescripcionExp" name="descripcion_exp" ngDefaultControl placeholder="Ingrese descripcion de puesto laboral" [(ngModel)]="t.descripcion">
+          </div>
+          <div class="form-group">
+            <label for="category">¿Es Trabajo Actual?</label>
+            <select [(ngModel)]="t.es_trabajo_actual" name="t.es_trabajo_actual" class="form-select" id="esTrabajoActual">
+              <option [ngValue]="true">Si</option>
+              <option [ngValue]="false" selected>No</option>
+            </select>
+          </div>
+          <div class="form-group">
+              <label for="inputDate">Fecha de Inicio(*)</label>
+              <input type="date" class="form-control" id="inputFechaInicioExp" name="fechaInicio_exp" ngDefaultControl placeholder="yyyy-mm-dd" [(ngModel)]="t.fechaInicio">
+          </div>
+          <div class="form-group">
+            <label for="inputDate">Fecha de Fin(*)</label>
+            <input type="date" *ngIf="t.es_trabajo_actual == false" class="form-control" id="inputFechaInicioExp" name="fechaInicio_exp" ngDefaultControl placeholder="yyyy-mm-dd" [(ngModel)]="t.fecha_fin">
+            <input type="date" *ngIf="t.es_trabajo_actual == true" class="form-control" id="inputFechaInicioExp" name="fechaInicio_exp" ngDefaultControl placeholder="yyyy-mm-dd" [(ngModel)]="t.fecha_fin" readonly>
+        </div>
+          <div class="form-group">
+            <label for="category">Tipo Empleo(*)</label>
+            <select [(ngModel)]="t.tipo_empleo" name="tipo_empleo.id" class="form-select">
+              <option [ngValue]="null" selected hidden>Seleccionar Tipo de Trabajo</option>
+              <option *ngFor="let tipo of tipo_trabajos" [ngValue]="tipo">{{ tipo.nombre_tipo }}</option>
+            </select>
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalAlta()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="crearEmpleo()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Experiencia Laboral</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="inputEmpresa">Empresa(*)</label>
+            <input type="text" class="form-control" id="inputEmpresa_mod" name="empresa_exp_mod" ngDefaultControl placeholder="Ingrese el nombre de la Empresa" [(ngModel)]="t1.nombre_empresa">
+        </div>
+        <div class="form-group">
+            <label for="inputDescripcion">Descripción del puesto</label>
+            <input type="text" class="form-control" id="inputDescripcionExp_mod" name="descripcion_exp_mod" ngDefaultControl placeholder="Ingrese descripcion de puesto laboral" [(ngModel)]="t1.descripcion">
+        </div>
+        <div class="form-group">
+          <label for="category">¿Es Trabajo Actual?</label>
+          <select [(ngModel)]="t1.es_trabajo_actual" name="t1.es_trabajo_actual" class="form-select" id="esTrabajoActual_mod">
+            <option *ngIf="t1.es_trabajo_actual == true" [ngValue]="true" selected>Si</option>
+            <option *ngIf="t1.es_trabajo_actual == true" [ngValue]="false">No</option>
+            <option *ngIf="t1.es_trabajo_actual == false" [ngValue]="true">Si</option>
+            <option *ngIf="t1.es_trabajo_actual == false" [ngValue]="false" selected>No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="inputDate">Fecha de Inicio(*)</label>
+          <input type="date" class="form-control" id="inputFechaInicioMod" name="fechaInicio_exp_edit" ngDefaultControl placeholder="yyyy-MM-dd" [ngModel]="t1.fechaInicio | date:'yyyy-MM-dd'" (ngModelChange)="t1.fechaInicio=$event">
+      </div>
+        <div class="form-group">
+          <label for="inputDate">Fecha de Fin(*)</label>
+          <input type="date" *ngIf="t1.es_trabajo_actual == false" class="form-control" id="inputFechaInicioExp_mod" name="fechaInicio_exp_mod" ngDefaultControl placeholder="yyyy-mm-dd" [ngModel]="t1.fecha_fin | date:'yyyy-MM-dd'" (ngModelChange)="t1.fecha_fin=$event">
+          <input type="date" *ngIf="t1.es_trabajo_actual == true" class="form-control" id="inputFechaInicioExp_mod" name="fechaInicio_exp_mod" ngDefaultControl placeholder="yyyy-mm-dd" [ngModel]="t1.fecha_fin | date:'yyyy-MM-dd'" (ngModelChange)="t1.fecha_fin=$event" readonly>
+      </div>
+        <div class="form-group">
+          <label for="category">Tipo Empleo(*)</label>
+          <select [(ngModel)]="t1.tipo_empleo" name="tipo_empleo.id" class="form-select">
+            <option [ngValue]="t1.tipo_empleo" selected hidden>{{t1.tipo_empleo.nombre_tipo}}</option>
+            <option *ngFor="let tipo of tipo_trabajos" [ngValue]="tipo">{{ tipo.nombre_tipo }}</option>
+          </select>
+        </div>
+        <div *ngIf="validacion == false">
+          <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+        </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalModificacion()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarEmpleo(t1.id)">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar Experiencia Laboral</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p name = "id_Empleo_eliminar" ngDefaultControl [(ngModel)]="t2.id">¿Esta seguro que desea eliminar el empleo "{{t2.descripcion}}" en "{{t2.nombre_empresa}}"?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarEmpleo([t2.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

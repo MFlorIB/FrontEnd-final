@@ -1,0 +1,11 @@
+.fa{
+  background-color: inherit;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-group-text{
+  width: 50px;
+}

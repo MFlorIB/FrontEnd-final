@@ -1,0 +1,144 @@
+<div class="card mat-card">
+  <div class="card-titles">
+      <h2>Estudios</h2>
+      <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-plus" data-bs-toggle="modal" data-bs-target="#newEdu"></i></a></div>
+    </div>
+    <div class="achivements">
+      <div>
+        <div>
+          <ul class="education-list">
+            <li *ngFor="let estudio of estudios" id="listEducation">
+              <div class="data-container">
+                  <div class="list-info">
+                    <div>
+                      <h5> {{estudio.nivel}} </h5>
+                      <p><span>Descripción: {{estudio.descripcion}}</span></p>
+                      <p><span>Establecimiento: {{estudio.establecimiento}}</span></p>
+                      <p><span>Fecha de Fin: {{estudio.fecha_fin | date: 'MMMM YYYY'}}</span></p>
+                      <p><span>Fecha de Inicio: {{estudio.fechaInicio | date: 'MMMM YYYY'}}</span></p>
+                    </div>
+                  </div>
+              </div>
+              <div class="data-control">
+                <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#editEstudios" (click)="obtenerEstudiosModificacion([estudio.id])"></i></a></div>
+                <div class="btn-edit"><a routerLink="portfolio/#"class="btn-right"><i class="fa fa-trash" data-bs-toggle="modal" data-bs-target="#deleteEstudios" (click)="obtenerEstudiosEliminar([estudio.id])"></i></a></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="newEdu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo Estudio</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputNivel">Nivel(*)</label>
+              <input type="text" class="form-control" id="inputNivel" name="nivel_edu" ngDefaultControl placeholder="Ingrese el Nivel Educativo" [(ngModel)]="e.nivel">
+          </div>
+          <div class="form-group">
+              <label for="inputDescription">Descripción</label>
+              <input type="text" class="form-control" id="inputDescription" name="descripcion_edu" ngDefaultControl placeholder="Ingrese Descripción" [(ngModel)]="e.descripcion">
+          </div>
+          <div class="form-group">
+              <label for="inputEstablishment">Establecimiento(*)</label>
+              <input type="text" class="form-control" id="inputEstablishment" name="establishment_edu" ngDefaultControl placeholder="Ingrese Establecimiento" [(ngModel)]="e.establecimiento">
+          </div>
+          <div class="form-group">
+            <label for="inputFechaInicio">Fecha de Inicio(*)</label>
+            <input type="date" class="form-control" id="inputFechaInicio" name="fechaInicio_edu" ngDefaultControl placeholder="yyyy-mm-dd" [(ngModel)]="e.fechaInicio">
+          </div>  
+          <div class="form-group">
+              <label for="inputFechaFin">Fecha de Fin</label>
+              <input type="date" class="form-control" id="inputFechaFin" name="fechaFin_edu" ngDefaultControl placeholder="yyyy-mm-dd" [(ngModel)]="e.fecha_fin">
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalAlta()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="crearEstudios()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editEstudios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Estudio</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputSchool">Nivel(*)</label>
+              <input type="text" class="form-control" id="inputNivelMod" name="nivel_edu_edit" ngDefaultControl placeholder="Ingrese el Nivel Educativo" [(ngModel)]="e1.nivel">
+          </div>
+          <div class="form-group">
+              <label for="inputDescription">Descripción</label>
+              <input type="text" class="form-control" id="inputDescriptionMod" name="descripcion_edu_edit" ngDefaultControl placeholder="Ingrese Descripción" [(ngModel)]="e1.descripcion">
+          </div>
+          <div class="form-group">
+              <label for="inputEstablishment">Establecimiento(*)</label>
+              <input type="text" class="form-control" id="inputEstablishmentMod" name="establishment_edu_edit" ngDefaultControl placeholder="Ingrese Establecimiento" [(ngModel)]="e1.establecimiento">
+          </div>
+          <div class="form-group">
+            <label for="inputDate">Fecha de Inicio(*)</label>
+            <input type="date" class="form-control" id="inputFechaInicioMod" name="fechaInicio_edu_edit" ngDefaultControl placeholder="yyyy-MM-dd" [ngModel]="e1.fechaInicio | date:'yyyy-MM-dd'" (ngModelChange)="e1.fechaInicio=$event">
+          </div>
+          <div class="form-group">
+              <label for="inputDate">Fecha de Fin</label>
+              <input type="date" class="form-control" id="inputFechaFinMod" name="fechaFin_edu_edit" ngDefaultControl placeholder="yyyy-MM-dd" [ngModel]="e1.fecha_fin | date:'yyyy-MM-dd'" (ngModelChange)="e1.fecha_fin=$event">
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalModificacion()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarEstudios([e1.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteEstudios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar Estudio</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p name = "id_Estudio_eliminar" ngDefaultControl [(ngModel)]="e2.id">¿Esta seguro que desea eliminar el estudio {{e2.nivel}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarEstudios([e2.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

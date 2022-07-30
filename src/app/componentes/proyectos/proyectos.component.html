@@ -1,0 +1,142 @@
+<div class="card mat-card">
+    <div class="card-titles">
+        <h2>Proyectos</h2>
+        <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-plus" data-bs-toggle="modal" data-bs-target="#newProyecto"></i></a></div>
+      </div>
+      <div class="achivements">
+        <div>
+          <div>
+            <ul class="project-list">
+              <li *ngFor="let proyecto of proyectos" id="listProyectos">
+                <div class="data-container">
+                    <div class="list-info">
+                      <div>
+                        <h5>{{proyecto.tipo}}</h5>
+                        <p><span>Link: {{proyecto.link_proyecto}}</span></p>
+                        <p><span>Descripción: {{proyecto.descripcion}}</span></p>
+                      </div>
+                    </div>
+                </div>
+                <div class="data-control">
+                  <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#editProyecto" (click)="obtenerProyectoModificacion([proyecto.id])"></i></a></div>
+                  <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-trash" data-bs-toggle="modal" data-bs-target="#deleteProyecto" (click)="obtenerProyectoEliminar([proyecto.id])"></i></a></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+<div class="modal fade" id="newProyecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo Proyecto</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputTipo">Tipo Proyecto(*)</label>
+              <input type="text" class="form-control" id="inputTipo" name="tipo_proyecto" ngDefaultControl placeholder="Ingresa Tipo de Proyecto (Ej: FrontEnd, BackEnd)" [(ngModel)]="p.tipo">
+          </div>
+          <div class="form-group">
+            <label for="inputLink">Link(*)</label>
+            <input type="text" class="form-control" id="inputLink" name="link_proyecto" ngDefaultControl placeholder="Ingresa Link de Proyecto (Ej: Github, Heroku)" [(ngModel)]="p.link_proyecto">
+          </div>
+          <div class="form-group">
+            <label for="inputDesc">Descripción(*)</label>
+            <input type="text" class="form-control" id="inputDesc" name="descripcion_proyecto" ngDefaultControl placeholder="Tecnologías que utilizaste" [(ngModel)]="p.descripcion">
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalAlta()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="crearProyecto()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="editProyecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Proyecto</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group" style="display: none;">
+              <input type="text" class="form-control" id="inputIDMod" [(ngModel)]="p1.id" >
+          </div>
+          <div class="form-group">
+              <label for="inputTipoMod">Tipo de Proyecto(*)</label>
+              <input type="text" class="form-control" id="inputTipoMod" name="tipo_de_proyecto_mod" ngDefaultControl placeholder="Ingresa Tipo de Proyecto (Ej: FrontEnd, BackEnd)" [(ngModel)]="p1.tipo">
+          </div>
+          <div class="form-group">
+            <label for="inputLinkMod">Link(*)</label>
+            <input type="text" class="form-control" id="inputLinkMod" name="link_proyecto_mod" ngDefaultControl placeholder="Ingresa Link de Proyecto (Ej: Github, Heroku)" [(ngModel)]="p1.link_proyecto">
+          </div>
+          <div class="form-group">
+            <label for="inputDescMod">Descripcion(*)</label>
+            <input type="text" class="form-control" id="inputDescMod" name="descripcion_proyecto_mod" ngDefaultControl placeholder="Tecnologías que utilizaste" [(ngModel)]="p1.descripcion">
+          </div>    
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"(click)="cerrarModalModificacion()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarProyecto([p1.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteProyecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar Proyecto</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p name = "id_proyecto_delete" ngDefaultControl [(ngModel)]="p2.id">¿Esta seguro que desea eliminar el proyecto {{p2.tipo}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarProyecto([p2.id])">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

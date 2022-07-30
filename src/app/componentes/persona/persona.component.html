@@ -1,0 +1,187 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+  &nbsp; &nbsp; 
+  
+  <a class="navbar-brand" id="nombreCabecera" routerLink="portfolio/#"><img src="assets/img/APLogo-20-20.png" alt="argpprod" id="argentina_programa"></a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light" href="https://www.facebook.com/flor.inchauspe">
+        <i class="grey-text fab fa-facebook-square fa-2x"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light" href="https://www.instagram.com/florinchauspe/?hl=en">
+        <i class="grey-text fab fa-instagram fa-2x"></i>
+      </a>
+    </li>
+  </ul>
+    
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <button class="btn btn-outline-danger my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#cerrarSesion">Cerrar Sesión</button>
+      &nbsp; &nbsp; 
+    </div>
+  </nav>
+  
+  <div class="card mat-card" id="first-card">
+      <div id="profile-background"><img id="info-back-img" src="./assets/img/img-back.jpg" height="200"></div>
+      <div id="info" style="padding: 16px">
+        <div id="info-img">
+          <img id="info-user-img" class="profile-image" src="./assets/img/about_me.jpeg">
+          <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#editProfile" (click)="obtenerPersonaModificar()"></i></a></div>
+        </div>
+        <div id="info-data">
+          <div>
+            <h1 id="info-name">{{mipersona.nombres}} {{mipersona.apellidos}}</h1>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2H2Z"/>
+              </svg>
+              <span id="info-position">{{miempleoactual.descripcion}}</span> en <span id="info-company">{{miempleoactual.nombre_empresa}}</span></div>
+            <div id="info-contact">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+              </svg>
+              <span id="info-ubication">{{mipersona.domicilio}}</span> <br>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone-vibrate-fill" viewBox="0 0 16 16">
+                <path d="M4 4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm5 7a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM1.807 4.734a.5.5 0 1 0-.884-.468A7.967 7.967 0 0 0 0 8c0 1.347.334 2.618.923 3.734a.5.5 0 1 0 .884-.468A6.967 6.967 0 0 1 1 8c0-1.18.292-2.292.807-3.266zm13.27-.468a.5.5 0 0 0-.884.468C14.708 5.708 15 6.819 15 8c0 1.18-.292 2.292-.807 3.266a.5.5 0 0 0 .884.468A7.967 7.967 0 0 0 16 8a7.967 7.967 0 0 0-.923-3.734zM3.34 6.182a.5.5 0 1 0-.93-.364A5.986 5.986 0 0 0 2 8c0 .769.145 1.505.41 2.182a.5.5 0 1 0 .93-.364A4.986 4.986 0 0 1 3 8c0-.642.12-1.255.34-1.818zm10.25-.364a.5.5 0 0 0-.93.364c.22.563.34 1.176.34 1.818 0 .642-.12 1.255-.34 1.818a.5.5 0 0 0 .93.364C13.856 9.505 14 8.769 14 8c0-.769-.145-1.505-.41-2.182z"/>
+              </svg>
+              <span>Cel: {{mipersona.telefono}}</span> <br>
+              <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+              </svg>
+              <span>E-mail: {{mipersona.correo_electronico}}</span>
+            </div>
+          </div>
+          <ul id="info-details">
+            <li><a href="#">
+              <img id="info-company-img" src="./assets/img/logo nuevo apex.jpg">
+              <h2 id="info-company-name">APEX America BPO</h2>
+            </a></li>
+          </ul>
+        </div>
+      </div>
+  </div>
+
+  <div class="card mat-card">
+    <div class="card-titles">
+        <h2>Acerca de</h2>
+        <div class="btn-edit"><a routerLink="portfolio/#" class="btn-right"><i class="fa fa-pen" data-bs-toggle="modal" data-bs-target="#editAbout" (click)="cargarAcercaDe()"></i></a></div>
+    </div>    
+    <div id="about">
+      {{acerca_de}}
+    </div> 
+</div>
+
+
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Persona</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputName">Nombres(*)</label>
+              <input type="text" class="form-control" id="inputNameMod" name="nombres_prof_edit" ngDefaultControl placeholder="Ingrese Nombres" [(ngModel)]="p.nombres">
+          </div>
+          <div class="form-group">
+              <label for="inputNickName">Apellidos(*)</label>
+              <input type="text" class="form-control" id="inputNickNameMod" name="apellidos_prof_edit" ngDefaultControl placeholder="Ingrese Apellidos" [(ngModel)]="p.apellidos" >
+          </div>
+          <div class="form-group">
+              <label for="inputAdress">Domicilio(*)</label>
+              <input type="text" class="form-control" id="inputAdressMod" name="domicilio_prof_edit" ngDefaultControl placeholder="Ingrese Domicilio" [(ngModel)]="p.domicilio">
+          </div>
+          <div class="form-group">
+              <label for="inputPhone">Cel(*)</label>
+              <input type="text" class="form-control" id="inputPhoneMod" name="telefono_prof_edit" ngDefaultControl placeholder="Ingrese Teléfono" [(ngModel)]="p.telefono">
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">E-mail(*)</label>
+            <input type="text" class="form-control" id="inputEmailMod" name="correo_electronico_prof_edit" ngDefaultControl placeholder="Ingrese Correo Electrónico" [(ngModel)]="p.correo_electronico">
+        </div>
+        <div *ngIf="validacion == false">
+          <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalModificacion()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarPersona(p.id)">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editAbout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Acerca de</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="inputPresentation">Presentación(*)</label>
+              <textarea type="text" class="form-control" id="inputPresentationMod" name="presentacion_abo_edit" ngDefaultControl placeholder="Ingrese Presentación Personal" [(ngModel)]="acerca"></textarea>
+          </div>
+          <div *ngIf="validacion == false">
+            <p class="text-danger">Para continuar debe completar todos los campos denotados con (*)</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalModificacion1()">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="modificarAcercaDe(acerca)">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="cerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p>¿Esta seguro que desea cerrar la sesión?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="CerrarSesion()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
